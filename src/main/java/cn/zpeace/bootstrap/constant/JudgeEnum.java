@@ -17,9 +17,9 @@ public enum JudgeEnum implements BaseEnum {
      */
     YES(1, "是");
 
-    private final Integer value;
+    public final Integer value;
 
-    private final String label;
+    public final String label;
 
     JudgeEnum(Integer value, String label) {
         this.value = value;

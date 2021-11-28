@@ -28,7 +28,10 @@ public class EnumValidator implements ConstraintValidator<EnumCheck, Object> {
         }
         // 所有的枚举
         Object[] objects = annotation.clazz().getEnumConstants();
-
+        // 枚举类没有枚举值时，直接返回校验不通过
+        if (objects == null || objects.length <= 0) {
+            return false;
+        }
         try {
             // 比值的方法
             // 两种 getValue  getLabel  默认使用getValue进行比较

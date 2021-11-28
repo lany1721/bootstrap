@@ -35,7 +35,8 @@ public class GlobalExceptionHandler {
      * HTTP status 400
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ApiResponse<Void> handleHttpMessageNotReadableException() {
+    public ApiResponse<Void> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.warn(e.getMessage());
         return ApiResponse.fail(ErrorCodeEnum.BAD_REQUEST, "数据格式有误，无法解析");
     }
 
