@@ -1,8 +1,11 @@
 package cn.zpeace.bootstrap.config.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import lombok.Data;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,5 +51,25 @@ public class ToTimestampSerializerTest {
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.systemDefault());
         String timestampStr = MAPPER.writeValueAsString(localDateTime);
         Assertions.assertEquals(Long.parseLong(timestampStr), localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+    }
+
+    @Test
+    public void convertIllegalTypeToTimestamp() {
+        TestObj obj = new TestObj();
+        obj.setS1("123");
+        Assertions.assertThrows(JsonMappingException.class, () -> {
+            String s = MAPPER.writeValueAsString(obj);
+            System.out.println(s);
+        });
+
+    }
+
+    @Data
+    static class TestObj {
+
+        @JsonSerialize(using = ToTimestampSerializer.class)
+        private String s1;
+
+
     }
 }

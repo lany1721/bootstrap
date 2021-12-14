@@ -14,7 +14,7 @@ import java.util.Date;
  * 把时间类型转换为时间戳
  * 用法，在时间类型成员属性标注注解 @JsonSerialize(using = ToTimestampSerializer.class)
  * 只支持：LocalDate、LocalDateTime、Date
- * 其他类型会序列化为null
+ * 其他类型会抛出IllegalArgumentException
  *
  * @author skiya
  * @date Created on 2021-11-24.
@@ -24,11 +24,7 @@ public class ToTimestampSerializer extends StdSerializer<Object> {
     public ToTimestampSerializer() {
         super(Object.class);
     }
-
-    protected ToTimestampSerializer(Class<Object> t) {
-        super(t);
-    }
-
+    
     @Override
     public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         if (value == null) {
@@ -46,7 +42,7 @@ public class ToTimestampSerializer extends StdSerializer<Object> {
             final long milli = date.getTime();
             jsonGenerator.writeNumber(milli);
         } else {
-            jsonGenerator.writeNull();
+            throw new IllegalArgumentException("[" + value.getClass().getTypeName() + "] can't serialize to timestamp");
         }
     }
 }
