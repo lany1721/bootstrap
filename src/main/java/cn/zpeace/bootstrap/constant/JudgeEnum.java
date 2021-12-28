@@ -6,7 +6,7 @@ import java.util.*;
  * @author skiya
  * @date Created on 2021-11-25.
  */
-public enum JudgeEnum implements BaseEnum {
+public enum JudgeEnum implements BaseEnum<Integer> {
     /**
      * 是
      */
@@ -51,14 +51,14 @@ public enum JudgeEnum implements BaseEnum {
         )));
     }
 
-    public static List<Map<String, String>> mappings = new ArrayList<>(JudgeEnum.values().length);
+    public static final List<Map<String, String>> MAPPINGS = new ArrayList<>(JudgeEnum.values().length);
 
     static {
         for (JudgeEnum e : JudgeEnum.values()) {
             Map<String, String> enumMap = new HashMap<>();
             enumMap.put("key", String.valueOf(e.value));
             enumMap.put("value", e.label);
-            mappings.add(enumMap);
+            MAPPINGS.add(enumMap);
         }
     }
 }

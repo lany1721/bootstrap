@@ -6,14 +6,14 @@ import java.util.Objects;
  * @author zpeace
  * @date 2020/9/11
  */
-public interface BaseEnum {
+public interface BaseEnum<T> {
 
     /**
      * 取枚举类的值
      *
      * @return 枚举值
      */
-    Object getValue();
+    T getValue();
 
     /**
      * 获取枚举类字面值

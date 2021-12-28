@@ -31,8 +31,12 @@ public class BootstrapController {
     private final MessageSource messageSource;
 
     @GetMapping("/hello")
-    public ApiResponse<String> hello(@DocEnum() String word) {
-        return ApiResponse.ok("hello," + word);
+    public String hello(@DocEnum() String word) {
+        return "hello," + word;
+    }
+
+    @GetMapping("/null")
+    public void nil() {
     }
 
     @PostMapping("/page")
@@ -56,4 +60,5 @@ public class BootstrapController {
     public ApiResponse<Void> checkEnum(@Valid @RequestBody EnumTestRequest request) {
         return ApiResponse.ok();
     }
+
 }

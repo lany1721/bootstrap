@@ -1,4 +1,4 @@
-package cn.zpeace.bootstrap.validator;
+package cn.zpeace.bootstrap.validator.en;
 
 
 import cn.zpeace.bootstrap.anno.DocEnum;
@@ -23,10 +23,9 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = EnumValidator.class)
 @DocEnum
 public @interface EnumCheck {
+
     /**
      * 默认的错误提示信息
-     *
-     * @return String
      */
     String message() default "非法的枚举值";
 

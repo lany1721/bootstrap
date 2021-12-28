@@ -1,5 +1,7 @@
-package cn.zpeace.bootstrap.validator;
+package cn.zpeace.bootstrap.validator.en;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.zpeace.bootstrap.util.EnumUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.ConstraintValidator;
@@ -32,6 +34,11 @@ public class EnumValidator implements ConstraintValidator<EnumCheck, Object> {
         if (objects == null || objects.length <= 0) {
             return false;
         }
+        // 构建错误提示,把支持的枚举信息返回,禁用掉默认的提示信息
+        constraintValidatorContext.disableDefaultConstraintViolation();
+        constraintValidatorContext.buildConstraintViolationWithTemplate(annotation.message() + "(可选值:"
+                        + CollUtil.join(EnumUtils.getFieldMappingList(annotation.clazz(), "value", "label"), ",") + ")")
+                .addConstraintViolation();
         try {
             // 比值的方法
             // 两种 getValue  getLabel  默认使用getValue进行比较
