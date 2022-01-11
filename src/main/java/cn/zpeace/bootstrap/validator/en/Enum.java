@@ -1,9 +1,7 @@
 package cn.zpeace.bootstrap.validator.en;
 
 
-import cn.zpeace.bootstrap.anno.DocEnum;
 import cn.zpeace.bootstrap.constant.BaseEnum;
-import org.springframework.core.annotation.AliasFor;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -21,8 +19,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD, ElementType.PARAMETER})
 @Constraint(validatedBy = EnumValidator.class)
-@DocEnum
-public @interface EnumCheck {
+public @interface Enum {
 
     /**
      * 默认的错误提示信息
@@ -34,8 +31,7 @@ public @interface EnumCheck {
      *
      * @return Class
      */
-    @AliasFor(annotation = DocEnum.class, attribute = "clazz")
-    Class<? extends BaseEnum> clazz() default BaseEnum.class;
+    Class<? extends BaseEnum<?>> clazz();
 
     /**
      * 是否必须

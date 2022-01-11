@@ -1,7 +1,7 @@
 package cn.zpeace.bootstrap.model.request;
 
 import cn.zpeace.bootstrap.constant.JudgeEnum;
-import cn.zpeace.bootstrap.validator.en.EnumCheck;
+import cn.zpeace.bootstrap.validator.en.Enum;
 import cn.zpeace.bootstrap.validator.in.In;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class EnumTestRequest {
     @Schema(description = "主键")
     private Long id;
 
-    @EnumCheck(clazz = JudgeEnum.class, required = false)
+    @Enum(clazz = JudgeEnum.class)
     @Schema(description = "是否启用")
     private Integer enable;
 }

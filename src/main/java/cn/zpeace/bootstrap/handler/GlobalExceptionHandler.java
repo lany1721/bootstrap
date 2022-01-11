@@ -112,7 +112,7 @@ public class GlobalExceptionHandler {
      * @return {@link ApiResponse<Void>}
      */
     @ExceptionHandler(Exception.class)
-    public ApiResponse<Void> otherException(Exception e) {
+    public ApiResponse<Void> handleOtherException(Exception e) {
         log.error("服务器发生异常", e);
         return ApiResponse.fail(ErrorCodeEnum.INTERNAL_SERVER_ERROR);
     }

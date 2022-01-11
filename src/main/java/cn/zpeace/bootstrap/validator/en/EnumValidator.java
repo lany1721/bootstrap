@@ -13,12 +13,12 @@ import java.lang.reflect.Method;
  * @date 2020/9/11
  */
 @Slf4j
-public class EnumValidator implements ConstraintValidator<EnumCheck, Object> {
+public class EnumValidator implements ConstraintValidator<Enum, Object> {
 
-    private EnumCheck annotation;
+    private Enum annotation;
 
     @Override
-    public void initialize(EnumCheck constraintAnnotation) {
+    public void initialize(Enum constraintAnnotation) {
         this.annotation = constraintAnnotation;
     }
 

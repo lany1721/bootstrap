@@ -1,11 +1,11 @@
 package cn.zpeace.bootstrap.controller;
 
-import cn.hutool.core.collection.ListUtil;
-import cn.zpeace.bootstrap.anno.DocEnum;
+import cn.zpeace.bootstrap.model.entity.DateTimeTest;
 import cn.zpeace.bootstrap.model.request.EnumTestRequest;
 import cn.zpeace.bootstrap.support.ApiResponse;
 import cn.zpeace.bootstrap.support.PageRequest;
 import cn.zpeace.bootstrap.support.PageResponse;
+import cn.zpeace.bootstrap.validator.in.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.TimeZone;
 
 /**
  * @author skiya
@@ -31,7 +32,7 @@ public class BootstrapController {
     private final MessageSource messageSource;
 
     @GetMapping("/hello")
-    public String hello(@DocEnum() String word) {
+    public String hello(@In(allowableValues = {"world"}) String word) {
         return "hello," + word;
     }
 
@@ -39,15 +40,25 @@ public class BootstrapController {
     public void nil() {
     }
 
+    @GetMapping("/dateTime")
+    public DateTimeTest dateTimeTest() {
+        return new DateTimeTest();
+    }
+
+    @GetMapping("/tz")
+    public TimeZone tz(TimeZone tz) {
+        System.out.println(tz);
+        return tz;
+    }
+
     @PostMapping("/page")
-    public ApiResponse<PageResponse<String>> page(@RequestBody PageRequest page) {
-        PageResponse<String> pageResponse = new PageResponse<>();
+    public ApiResponse<String> page(@RequestBody PageRequest page) {
+        PageResponse pageResponse = new PageResponse();
         pageResponse.setCurrent(page.getCurrent());
         pageResponse.setSize(page.getSize());
         pageResponse.setPages(10L);
         pageResponse.setTotal(100L);
-        pageResponse.setRecords(ListUtil.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
-        return ApiResponse.ok(pageResponse);
+        return ApiResponse.page(null, pageResponse);
     }
 
     @GetMapping("/i18n")

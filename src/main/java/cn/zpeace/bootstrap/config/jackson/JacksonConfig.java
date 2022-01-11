@@ -2,8 +2,8 @@ package cn.zpeace.bootstrap.config.jackson;
 
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
@@ -21,10 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * @author skiya
@@ -39,27 +36,27 @@ public class JacksonConfig {
     @ConditionalOnMissingBean
     public Jackson2ObjectMapperBuilderCustomizer customizer() {
         return builder -> {
-            builder.locale(Locale.getDefault());
-            builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
-            builder.simpleDateFormat(DatePattern.NORM_DATETIME_PATTERN);
+
             // 序列化时 Long 转换为 String
             builder.serializerByType(Long.class, ToStringSerializer.instance);
-            SimpleModule module = new SimpleModule();
+
             // 时间序列化、反序列化格式
-            module.addSerializer(LocalDateTime.class,
+            JavaTimeModule javaTimeModule = new JavaTimeModule();
+            javaTimeModule.addSerializer(LocalDateTime.class,
                     new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN)));
-            module.addSerializer(LocalDate.class,
+            javaTimeModule.addSerializer(LocalDate.class,
                     new LocalDateSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATE_PATTERN)));
-            module.addSerializer(LocalTime.class,
+            javaTimeModule.addSerializer(LocalTime.class,
                     new LocalTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_TIME_PATTERN)));
-            module.addDeserializer(LocalDateTime.class,
+            javaTimeModule.addDeserializer(LocalDateTime.class,
                     new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN)));
-            module.addDeserializer(LocalDate.class,
+            javaTimeModule.addDeserializer(LocalDate.class,
                     new LocalDateDeserializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATE_PATTERN)));
-            module.addDeserializer(LocalTime.class,
+            javaTimeModule.addDeserializer(LocalTime.class,
                     new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DatePattern.NORM_TIME_PATTERN)));
 
-            builder.modules(module);
+            builder.modules(javaTimeModule);
+
         };
     }
 }
