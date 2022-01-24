@@ -23,7 +23,7 @@ public class ApiResponse<T> {
     @Schema(description = "数据")
     private T data;
 
-    @Schema(description = "分页信息")
+    @Schema(description = "分页信息,分页时返回")
     private PageResponse pagination;
 
     private ApiResponse() {

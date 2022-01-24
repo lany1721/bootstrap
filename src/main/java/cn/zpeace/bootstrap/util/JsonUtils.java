@@ -1,7 +1,10 @@
 package cn.zpeace.bootstrap.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +22,14 @@ import java.util.Map;
 public class JsonUtils {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static ObjectNode createObjectNode() {
+        return MAPPER.createObjectNode();
+    }
+
+    public static ArrayNode createArrayNode() {
+        return MAPPER.createArrayNode();
+    }
 
     @SneakyThrows
     public static String toJsonStr(Object obj) {
@@ -40,6 +51,14 @@ public class JsonUtils {
         return MAPPER.readValue(jsonStr, type);
     }
 
+    public static <T> T toBean(ObjectNode objectNode, Class<T> type) {
+        return MAPPER.convertValue(objectNode, type);
+    }
+
+    public static <T> T toBean(ObjectNode objectNode, TypeReference<T> type) {
+        return MAPPER.convertValue(objectNode, type);
+    }
+
     /**
      * 转化为 map
      */
@@ -55,5 +74,34 @@ public class JsonUtils {
     @SneakyThrows
     public static <E> List<E> toList(String jsonStr, Class<E> type) {
         return MAPPER.readValue(jsonStr, MAPPER.getTypeFactory().constructCollectionType(List.class, type));
+    }
+
+    public static <E> List<E> toList(ArrayNode arrayNode, Class<E> type) {
+        return MAPPER.convertValue(arrayNode, MAPPER.getTypeFactory().constructCollectionType(List.class, type));
+    }
+
+    @SneakyThrows
+    public static JsonNode toJsonNode(String jsonStr) {
+        return MAPPER.readTree(jsonStr);
+    }
+
+    public static JsonNode toJsonNode(Object obj) {
+        return MAPPER.valueToTree(obj);
+    }
+
+    /**
+     * 需要对象格式 json,否则抛出ClassCastException
+     */
+    @SneakyThrows
+    public static ObjectNode toObjectNode(String jsonStr) {
+        return (ObjectNode) toJsonNode(jsonStr);
+    }
+
+    /**
+     * 需要数组格式 json,否则抛出ClassCastException
+     */
+    @SneakyThrows
+    public static ArrayNode toArrayNode(String jsonStr) {
+        return (ArrayNode) toJsonNode(jsonStr);
     }
 }

@@ -36,21 +36,24 @@ public class ToTimestampSerializerTest {
     public void convertDateToTimestamp() throws JsonProcessingException {
         Date date = new Date();
         String timestampStr = MAPPER.writeValueAsString(date);
+        System.out.println(timestampStr);
         Assertions.assertEquals(Long.parseLong(timestampStr), date.getTime());
     }
 
     @Test
     public void convertLocalDateToTimestamp() throws JsonProcessingException {
-        LocalDate localDate = LocalDate.now(ZoneId.systemDefault());
+        LocalDate localDate = LocalDate.now(ZoneId.of("UTC"));
         String timestampStr = MAPPER.writeValueAsString(localDate);
-        Assertions.assertEquals(Long.parseLong(timestampStr), localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        System.out.println(timestampStr);
+        Assertions.assertEquals(Long.parseLong(timestampStr), localDate.atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli());
     }
 
     @Test
     public void convertLocalDateTimeToTimestamp() throws JsonProcessingException {
-        LocalDateTime localDateTime = LocalDateTime.now(ZoneId.systemDefault());
+        LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("UTC"));
         String timestampStr = MAPPER.writeValueAsString(localDateTime);
-        Assertions.assertEquals(Long.parseLong(timestampStr), localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        System.out.println(timestampStr);
+        Assertions.assertEquals(Long.parseLong(timestampStr), localDateTime.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli());
     }
 
     @Test
