@@ -41,7 +41,7 @@ public class ValidateUtilsTest {
         System.out.println(ValidateUtils.validate(validEntity).hasErrors());
         System.out.println(ValidateUtils.validate(validEntity).mergeErrorMessage());
         Assertions.assertEquals(false, ValidateUtils.validate(validEntity).hasErrors());
-        Assertions.assertNull(ValidateUtils.validate(validEntity).mergeErrorMessage());
+        Assertions.assertEquals("", ValidateUtils.validate(validEntity).mergeErrorMessage());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ValidateUtilsTest {
         System.out.println(ValidateUtils.validateProperty(validEntity, ListUtil.of("age")).hasErrors());
         System.out.println(ValidateUtils.validateProperty(validEntity, ListUtil.of("age")).mergeErrorMessage());
         Assertions.assertEquals(false, ValidateUtils.validateProperty(validEntity, ListUtil.of("age")).hasErrors());
-        Assertions.assertNull(ValidateUtils.validateProperty(validEntity, ListUtil.of("age")).mergeErrorMessage());
+        Assertions.assertEquals("", ValidateUtils.validateProperty(validEntity, ListUtil.of("age")).mergeErrorMessage());
         Assertions.assertThrows(IllegalArgumentException.class, () -> ValidateUtils.validateProperty(validEntity, CollUtil.newHashSet()));
     }
 

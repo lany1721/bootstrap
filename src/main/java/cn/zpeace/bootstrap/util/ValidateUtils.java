@@ -179,11 +179,11 @@ public class ValidateUtils {
         /**
          * 合并所有错误消息
          *
-         * @return 属性名+校验信息;
+         * @return 检验不通过返回:属性名+校验信息;检验通过返回""
          */
         public String mergeErrorMessage() {
             if (!this.hasErrors()) {
-                return null;
+                return "";
             }
             return this.getErrorMessage().entrySet().stream()
                     .map(i -> i.getKey() + i.getValue())

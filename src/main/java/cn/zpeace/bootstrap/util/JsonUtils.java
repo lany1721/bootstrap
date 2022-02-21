@@ -92,7 +92,6 @@ public class JsonUtils {
     /**
      * 需要对象格式 json,否则抛出ClassCastException
      */
-    @SneakyThrows
     public static ObjectNode toObjectNode(String jsonStr) {
         return (ObjectNode) toJsonNode(jsonStr);
     }
@@ -100,7 +99,6 @@ public class JsonUtils {
     /**
      * 需要数组格式 json,否则抛出ClassCastException
      */
-    @SneakyThrows
     public static ArrayNode toArrayNode(String jsonStr) {
         return (ArrayNode) toJsonNode(jsonStr);
     }
