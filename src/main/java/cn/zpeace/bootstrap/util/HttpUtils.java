@@ -56,7 +56,8 @@ public class HttpUtils {
     }
 
     public static Optional<String> post(String url) {
-        Request request = new Request.Builder().url(url).method("POST", null).build();
+        RequestBody body = RequestBody.create(new byte[0]);
+        Request request = new Request.Builder().url(url).method("POST", body).build();
         try (Response response = CLIENT.newCall(request).execute()) {
             return resolve(response);
         } catch (IOException e) {
@@ -70,20 +71,24 @@ public class HttpUtils {
 
     public static Optional<String> post(String url, Map<String, String> formParameters, Map<String, String> headers) {
         Assert.notNull(url, "url 不能为 null");
-        Assert.notNull(formParameters, "formParameters 不能为 null");
-        List<String> names = new ArrayList<>();
-        List<String> values = new ArrayList<>();
-        formParameters.forEach((k, v) -> {
-            names.add(k);
-            values.add(v);
-        });
-        FormBody formBody = new FormBody(names, values);
+        RequestBody body;
+        if (formParameters == null || formParameters.isEmpty()) {
+            body = RequestBody.create(new byte[0]);
+        } else {
+            List<String> names = new ArrayList<>();
+            List<String> values = new ArrayList<>();
+            formParameters.forEach((k, v) -> {
+                names.add(k);
+                values.add(v);
+            });
+            body = new FormBody(names, values);
+        }
         Request.Builder builder = new Request.Builder();
         if (headers != null && !headers.isEmpty()) {
             builder.headers(Headers.of(headers));
         }
         Request request = builder
-                .post(formBody)
+                .post(body)
                 .url(url)
                 .build();
         try (Response response = CLIENT.newCall(request).execute()) {

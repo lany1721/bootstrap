@@ -1,8 +1,10 @@
 package cn.zpeace.bootstrap.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
@@ -21,7 +23,13 @@ import java.util.Map;
 @Slf4j
 public class JsonUtils {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER;
+
+    static {
+        MAPPER = new ObjectMapper();
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    }
 
     public static ObjectNode createObjectNode() {
         return MAPPER.createObjectNode();

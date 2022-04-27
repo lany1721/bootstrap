@@ -98,6 +98,23 @@
             <version>3.12.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.cloudwise.douc</groupId>
+            <artifactId>douc-dubbo-api</artifactId>
+            <version>2.3.01</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>2.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
 
     </dependencies>
 

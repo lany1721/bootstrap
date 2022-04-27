@@ -3,9 +3,11 @@ package cn.zpeace.bootstrap.util;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.map.MapUtil;
+import cn.zpeace.bootstrap.util.entity.Post;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,7 +36,10 @@ public class HttpUtilsTest {
         String url = BASE_URL + "/posts";
         HashMap<String, String> queryParameters = MapUtil.of("userId", "1");
         Optional<String> responseBody = HttpUtils.get(url, queryParameters);
-        responseBody.ifPresent(System.out::println);
+        responseBody.ifPresent(s -> {
+            List<Post> posts = JsonUtils.toList(s, Post.class);
+            System.out.println(posts);
+        });
     }
 
     @Test
