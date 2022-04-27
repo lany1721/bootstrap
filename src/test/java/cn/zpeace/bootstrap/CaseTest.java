@@ -1,8 +1,6 @@
 package cn.zpeace.bootstrap;
 
 import cn.hutool.core.collection.ListUtil;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -27,11 +25,6 @@ public class CaseTest {
     }
 
     @Test
-    public void rxJava() {
-        Disposable disposable = Flowable.just("Hello world").subscribe(System.out::println);
-    }
-
-    @Test
     public void testPeek() {
         List<String> list = new ArrayList<>();
         List<String> strings = ListUtil.of("1", "5", "3", "2", "4")
@@ -41,5 +34,5 @@ public class CaseTest {
         System.out.println("strings: " + strings);
         System.out.println("list: " + list);
     }
-    
+
 }
