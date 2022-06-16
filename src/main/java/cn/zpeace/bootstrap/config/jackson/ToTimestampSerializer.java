@@ -34,11 +34,11 @@ public class ToTimestampSerializer extends StdSerializer<Object> {
             jsonGenerator.writeNull();
         } else if (value instanceof LocalDate) {
             LocalDate localDate = (LocalDate) value;
-            final long milli = localDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
+            final long milli = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             jsonGenerator.writeNumber(milli);
         } else if (value instanceof LocalDateTime) {
             LocalDateTime localDateTime = (LocalDateTime) value;
-            final long milli = localDateTime.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
+            final long milli = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             jsonGenerator.writeNumber(milli);
         } else if (value instanceof Date) {
             Date date = (Date) value;

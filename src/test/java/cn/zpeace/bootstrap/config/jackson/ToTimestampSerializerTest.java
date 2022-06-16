@@ -50,10 +50,11 @@ public class ToTimestampSerializerTest {
 
     @Test
     public void convertLocalDateTimeToTimestamp() throws JsonProcessingException {
-        LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("UTC"));
+        LocalDateTime localDateTime = LocalDateTime.now();
         String timestampStr = MAPPER.writeValueAsString(localDateTime);
+        System.out.println(localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         System.out.println(timestampStr);
-        Assertions.assertEquals(Long.parseLong(timestampStr), localDateTime.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli());
+        Assertions.assertEquals(Long.parseLong(timestampStr), localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
     }
 
     @Test

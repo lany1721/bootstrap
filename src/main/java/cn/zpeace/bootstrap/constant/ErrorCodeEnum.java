@@ -20,6 +20,7 @@ public enum ErrorCodeEnum {
     /**
      * 服务端错误
      */
+    API_REQUEST_FAILED(570, "接口请求失败"),
     INTERNAL_SERVER_ERROR(500, "服务器发生错误");
 
     /**

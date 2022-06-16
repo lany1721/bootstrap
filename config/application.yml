@@ -1,6 +1,18 @@
+server:
+  port: 8088
+
 spring:
   application:
     name: bootstrap
-
-server:
-  port: 8088
+  messages:
+    basename: i18n/messages
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+    serialization:
+      # write-dates-as-timestamps: date 会被序列化成时间戳, localTime,localDate,localDateTime会被序列化成 y,m,d,h,min,s,nano
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-ignored-properties: false
+      adjust-dates-to-context-time-zone: true

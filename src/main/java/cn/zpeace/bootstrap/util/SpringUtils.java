@@ -1,11 +1,16 @@
 package cn.zpeace.bootstrap.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 
@@ -16,21 +21,25 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class SpringUtils implements ApplicationContextAware {
+public class SpringUtils implements ApplicationContextAware, BeanFactoryPostProcessor {
 
     /**
      * 上下文对象实例
      */
-    private static ApplicationContext applicationContext = null;
+    private static ApplicationContext applicationContext;
+
+    private static ConfigurableListableBeanFactory beanFactory;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (SpringUtils.applicationContext == null) {
-            SpringUtils.applicationContext = applicationContext;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Inject applicationContext succeeded");
-        }
+    public void setApplicationContext(@Nonnull ApplicationContext applicationContext) throws BeansException {
+        SpringUtils.applicationContext = applicationContext;
+        log.info("Inject applicationContext succeeded");
+    }
+
+    @Override
+    public void postProcessBeanFactory(@NotNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        SpringUtils.beanFactory = beanFactory;
+        log.info("Inject beanFactory succeeded");
     }
 
     /**
@@ -42,7 +51,11 @@ public class SpringUtils implements ApplicationContextAware {
         }
         return applicationContext;
     }
-    
+
+    public static ListableBeanFactory getBeanFactory() {
+        return null == beanFactory ? applicationContext : beanFactory;
+    }
+
     /**
      * 通过beanName获取Bean,并且自动强转
      *
@@ -51,7 +64,7 @@ public class SpringUtils implements ApplicationContextAware {
      */
     @SuppressWarnings("unchecked")
     public static <T> T getBean(String name) {
-        return (T) getApplicationContext().getBean(name);
+        return (T) getBeanFactory().getBean(name);
     }
 
     /**
@@ -61,7 +74,7 @@ public class SpringUtils implements ApplicationContextAware {
      * @return bean
      */
     public static <T> T getBean(Class<T> clazz) {
-        return getApplicationContext().getBean(clazz);
+        return getBeanFactory().getBean(clazz);
     }
 
     /**
@@ -71,6 +84,6 @@ public class SpringUtils implements ApplicationContextAware {
      * @return 类的所有 beans
      */
     public static <T> Map<String, T> getBeansOfType(Class<T> type) {
-        return getApplicationContext().getBeansOfType(type);
+        return getBeanFactory().getBeansOfType(type);
     }
 }

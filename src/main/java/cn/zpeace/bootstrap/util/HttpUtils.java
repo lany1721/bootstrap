@@ -6,8 +6,6 @@ import okhttp3.*;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -65,23 +63,17 @@ public class HttpUtils {
         }
     }
 
-    public static Optional<String> post(String url, Map<String, String> formParameters) {
-        return post(url, formParameters, null);
+    public static Optional<String> post(String url, FormBody formBody) {
+        return post(url, formBody, null);
     }
 
-    public static Optional<String> post(String url, Map<String, String> formParameters, Map<String, String> headers) {
+    public static Optional<String> post(String url, FormBody formBody, Map<String, String> headers) {
         Assert.notNull(url, "url 不能为 null");
         RequestBody body;
-        if (formParameters == null || formParameters.isEmpty()) {
-            body = RequestBody.create(new byte[0]);
+        if (formBody == null) {
+            body = FormBody.create(new byte[0]);
         } else {
-            List<String> names = new ArrayList<>();
-            List<String> values = new ArrayList<>();
-            formParameters.forEach((k, v) -> {
-                names.add(k);
-                values.add(v);
-            });
-            body = new FormBody(names, values);
+            body = formBody;
         }
         Request.Builder builder = new Request.Builder();
         if (headers != null && !headers.isEmpty()) {

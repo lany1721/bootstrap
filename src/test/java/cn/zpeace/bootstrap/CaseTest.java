@@ -3,10 +3,15 @@ package cn.zpeace.bootstrap;
 import cn.hutool.core.collection.ListUtil;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**
@@ -35,4 +40,25 @@ public class CaseTest {
         System.out.println("list: " + list);
     }
 
+    @Test
+    public void d0() throws ExecutionException, InterruptedException {
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        //1、使用runAsync或supplyAsync发起异步调用
+        CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> "result1", executor);
+        //2、CompletableFuture.completedFuture()直接创建一个已完成状态的CompletableFuture
+        CompletableFuture<String> cf2 = CompletableFuture.completedFuture("result2");
+        //3、先初始化一个未完成的CompletableFuture，然后通过complete()、completeExceptionally()，完成该CompletableFuture
+        CompletableFuture<String> cf = new CompletableFuture<>();
+        cf.complete("success");
+        System.out.println(cf1.get());
+    }
+
+    @Test
+    public void t8() {
+        System.out.println(System.currentTimeMillis());
+        System.out.println(Instant.now().toEpochMilli());
+    }
+
+    public void t9() {
+    }
 }

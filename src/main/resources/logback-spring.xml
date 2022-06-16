@@ -178,6 +178,17 @@
         </root>
     </springProfile>
 
+    <!-- 默认环境 -->
+    <springProfile name="default">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="DEBUG_FILE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="WARN_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+    </springProfile>
+
     <!-- 开发环境 -->
     <springProfile name="dev">
         <root level="INFO">
@@ -200,7 +211,7 @@
     </springProfile>
 
     <!-- 生产环境输出到文件 -->
-    <springProfile name="pro">
+    <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="DEBUG_FILE"/>
             <appender-ref ref="INFO_FILE"/>

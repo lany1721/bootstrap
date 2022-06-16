@@ -4,8 +4,10 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.map.MapUtil;
 import cn.zpeace.bootstrap.util.entity.Post;
+import okhttp3.FormBody;
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -45,9 +47,8 @@ public class HttpUtilsTest {
     @Test
     void postWithForm() {
         String url = BASE_URL + "/posts";
-        HashMap<String, String> formParameters = MapUtil.of("title", "foo");
-        formParameters.put("body", "bar");
-        Optional<String> responseBody = HttpUtils.post(url, formParameters);
+        FormBody formBody = new FormBody.Builder(StandardCharsets.UTF_8).addEncoded("title$", "foo").build();
+        Optional<String> responseBody = HttpUtils.post(url, formBody);
         responseBody.ifPresent(System.out::println);
     }
 
