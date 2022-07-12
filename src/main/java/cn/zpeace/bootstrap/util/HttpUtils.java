@@ -2,9 +2,11 @@ package cn.zpeace.bootstrap.util;
 
 import cn.hutool.core.map.MapUtil;
 import cn.zpeace.bootstrap.config.okhttp.HttpLoggingInterceptor;
+import cn.zpeace.bootstrap.config.okhttp.IgnoreCertificateSslFactory;
 import okhttp3.*;
 import org.springframework.util.Assert;
 
+import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +26,8 @@ public class HttpUtils {
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
+            .hostnameVerifier((hostname, session) -> true)
+            .sslSocketFactory(IgnoreCertificateSslFactory.getSslFactory(), (X509TrustManager) IgnoreCertificateSslFactory.trustManagers[0])
             .build();
 
     private static final MediaType APPLICATION_JSON = MediaType.parse("application/json; charset=utf-8");
