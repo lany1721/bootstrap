@@ -50,21 +50,13 @@ public class HttpUtils {
             builder.headers(Headers.of(headers));
         }
         Request request = builder.get().url(url).build();
-        try (Response response = CLIENT.newCall(request).execute()) {
-            return resolve(response);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return resolve(execute(request));
     }
 
     public static Optional<String> post(String url) {
         RequestBody body = RequestBody.create(new byte[0]);
         Request request = new Request.Builder().url(url).method("POST", body).build();
-        try (Response response = CLIENT.newCall(request).execute()) {
-            return resolve(response);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return resolve(execute(request));
     }
 
     public static Optional<String> post(String url, FormBody formBody) {
@@ -87,11 +79,7 @@ public class HttpUtils {
                 .post(body)
                 .url(url)
                 .build();
-        try (Response response = CLIENT.newCall(request).execute()) {
-            return resolve(response);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return resolve(execute(request));
     }
 
     public static Optional<String> post(String url, Object requestPayload) {
@@ -110,8 +98,12 @@ public class HttpUtils {
                 .post(body)
                 .url(url)
                 .build();
-        try (Response response = CLIENT.newCall(request).execute()) {
-            return resolve(response);
+        return resolve(execute(request));
+    }
+
+    public static Response execute(Request request) {
+        try {
+            return CLIENT.newCall(request).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -123,6 +115,8 @@ public class HttpUtils {
                 return r.string();
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } finally {
+                response.close();
             }
         });
     }

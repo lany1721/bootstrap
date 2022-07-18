@@ -5,7 +5,6 @@ import cn.zpeace.bootstrap.model.request.EnumTestRequest;
 import cn.zpeace.bootstrap.support.ApiResponse;
 import cn.zpeace.bootstrap.support.PageRequest;
 import cn.zpeace.bootstrap.support.PageResponse;
-import cn.zpeace.bootstrap.validator.in.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.TimeZone;
 
 /**
@@ -32,7 +32,7 @@ public class BootstrapController {
     private final MessageSource messageSource;
 
     @GetMapping("/hello")
-    public String hello(@In(allowableValues = {"world"}) String word) {
+    public String hello(@NotBlank String word) {
         return "hello," + word;
     }
 
