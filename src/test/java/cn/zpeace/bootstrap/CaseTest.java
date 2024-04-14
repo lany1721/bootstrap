@@ -1,13 +1,21 @@
 package cn.zpeace.bootstrap;
 
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.thread.ThreadUtil;
+import com.baomidou.mybatisplus.core.toolkit.sql.SqlInjectionUtils;
+import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -55,10 +63,53 @@ public class CaseTest {
 
     @Test
     public void t8() {
-        System.out.println(System.currentTimeMillis());
-        System.out.println(Instant.now().toEpochMilli());
+        // System.out.println(System.currentTimeMillis());
+        // System.out.println(Instant.now().toEpochMilli());
+        int anInt = Integer.parseInt("1111", 2);
+        System.out.println(anInt);
+        System.out.println(Thread.currentThread().getId());
+        HashSet<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(3);
+        set.add(2);
+        Integer[] array = set.toArray(new Integer[0]);
+        Arrays.sort(array);;
+        for (Integer integer : array) {
+            System.out.println(integer);
+        }
+    }
+    @Test
+    public void t9() {
+        Set<String> set = Sets.newConcurrentHashSet();
+
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                set.add("s" + i);
+            }
+            System.out.println("t1a:" + set);
+        }).start();
+        new Thread(() -> {
+            ThreadUtil.sleep(9000);
+            System.out.println("t2b:" + set);
+            set.clear();
+            System.out.println("t2a:" + set);
+        }).start();
+
+        new Thread(() -> {
+            ThreadUtil.sleep(6000);
+            System.out.println("t3b:" + set);
+            set.remove("s31");
+            System.out.println("t3a:" + set);
+        }).start();
+
+
+        while (true) {
+            ThreadUtil.sleep(3000);
+            System.out.println(set);
+        }
     }
 
-    public void t9() {
+    public void sqlCheck() {
+        SqlInjectionUtils.check("");
     }
 }

@@ -2,10 +2,11 @@ package cn.zpeace.bootstrap.validator.en;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.zpeace.bootstrap.util.EnumUtils;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+
 import java.lang.reflect.Method;
 
 /**

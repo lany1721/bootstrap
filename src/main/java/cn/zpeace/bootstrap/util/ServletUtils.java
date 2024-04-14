@@ -1,9 +1,9 @@
 package cn.zpeace.bootstrap.util;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created on 2022-1-6.

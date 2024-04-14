@@ -16,3 +16,18 @@ spring:
     deserialization:
       fail-on-ignored-properties: false
       adjust-dates-to-context-time-zone: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: pt@R2*7t&u*v
+  data:
+    redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+      password: Dc&9feX9mfM&
+
+logging:
+  level:
+    cn.zpeace.bootstrap: debug

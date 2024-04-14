@@ -2,6 +2,8 @@ package cn.zpeace.bootstrap.handler;
 
 import cn.zpeace.bootstrap.constant.ErrorCodeEnum;
 import cn.zpeace.bootstrap.support.ApiResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -13,8 +15,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

@@ -5,6 +5,8 @@ import cn.zpeace.bootstrap.model.request.EnumTestRequest;
 import cn.zpeace.bootstrap.support.ApiResponse;
 import cn.zpeace.bootstrap.support.PageRequest;
 import cn.zpeace.bootstrap.support.PageResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.TimeZone;
 
 /**

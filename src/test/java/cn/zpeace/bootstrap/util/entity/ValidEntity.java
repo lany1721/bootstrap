@@ -1,9 +1,9 @@
 package cn.zpeace.bootstrap.util.entity;
 
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.*;
 import java.util.List;
 
 /**
